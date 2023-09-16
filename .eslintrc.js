@@ -24,7 +24,7 @@ module.exports = {
     'prettier/prettier': [
       'error',
       {
-        endOfLine: 'LF',
+        endOfLine: 'lf',
       },
     ],
   },
