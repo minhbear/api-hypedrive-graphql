@@ -16,9 +16,7 @@ export class AuthService {
   constructor(
     @InjectRepository(PersonEntity)
     private personRepository: Repository<PersonEntity>,
-    private filmMakerService: FilmMakerService,
-    private jwtService: JwtService,
-    private configService: ConfigService
+    private jwtService: JwtService
   ) {}
 
   async signUp({ email, name, password, role }: CreateAccountDto): Promise<ReturnAccountDto> {
@@ -85,7 +83,7 @@ export class AuthService {
   async refreshToken(personId: number, refreshToken: string): Promise<ReturnTokenDto> {
     const person = await this.personRepository.findOne({ where: { id: personId } })
 
-    if(!person?.refreshToken) {
+    if (!person?.refreshToken) {
       throw new ForbiddenException(Message.Base.AccessDenied())
     }
 
