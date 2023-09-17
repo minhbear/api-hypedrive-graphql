@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { PassportStrategy } from '@nestjs/passport'
 import { ExtractJwt, Strategy } from 'passport-jwt'
-import { Request } from 'express';
+import { Request } from 'express'
 import { PersonService } from 'src/person/person.service'
 import { config } from 'src/config'
 import { JWTPayload } from 'src/common/types'

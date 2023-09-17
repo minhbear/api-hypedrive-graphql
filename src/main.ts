@@ -1,6 +1,5 @@
 import { NestFactory } from '@nestjs/core'
 import { Logger, ValidationPipe } from '@nestjs/common'
-
 import { AppModule } from './app.module'
 import { APILogger } from './config/logger'
 import { config } from './config'

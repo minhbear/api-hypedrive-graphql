@@ -51,8 +51,7 @@ export class ReturnTokenDto {
 }
 
 @ObjectType({ isAbstract: true })
-export class ReturnAccountDto extends ReturnTokenDto{
+export class ReturnAccountDto extends ReturnTokenDto {
   @Field()
   person: PersonEntity
 }
-

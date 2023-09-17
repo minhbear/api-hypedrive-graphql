@@ -1,8 +1,8 @@
-import { NotFoundException } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
-import { Message, MessageName } from "src/common/message";
-import { PersonEntity } from "src/db/entities/person";
+import { NotFoundException } from '@nestjs/common'
+import { InjectRepository } from '@nestjs/typeorm'
+import { Repository } from 'typeorm'
+import { Message, MessageName } from 'src/common/message'
+import { PersonEntity } from 'src/db/entities/person'
 
 export class PersonService {
   constructor(
@@ -13,7 +13,7 @@ export class PersonService {
   async findById(id: number): Promise<PersonEntity> {
     const person = await this.personRepository.findOne({ where: { id } })
 
-    if(!person) {
+    if (!person) {
       throw new NotFoundException(Message.Base.NotFound(MessageName.user))
     }
 

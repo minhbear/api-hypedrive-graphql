@@ -50,15 +50,15 @@ export class AuthService {
     }
   }
 
-  async signIn({email, password}: SignInDto): Promise<ReturnAccountDto> {
+  async signIn({ email, password }: SignInDto): Promise<ReturnAccountDto> {
     const person = await this.personRepository.findOne({ where: { email } })
 
-    if(!person) {
+    if (!person) {
       throw new BadRequestException(Message.Base.NotFound(MessageName.user))
     }
 
     const passwordMatches = person.comparePassword(password)
-    if(!passwordMatches) {
+    if (!passwordMatches) {
       throw new BadRequestException(Message.Base.NotFound(MessageName.user))
     }
 
@@ -85,13 +85,13 @@ export class AuthService {
   async refreshToken(personId: number, refreshToken: string): Promise<ReturnTokenDto> {
     const person = await this.personRepository.findOne({ where: { id: personId } })
 
-    if(!person || !person.refreshToken) {
+    if (!person || !person.refreshToken) {
       throw new ForbiddenException(Message.Base.AccessDenied())
     }
 
     const refreshTokenMatches = bcrypt.compareSync(refreshToken, person.refreshToken)
-  
-    if(!refreshTokenMatches) {
+
+    if (!refreshTokenMatches) {
       throw new ForbiddenException(Message.Base.AccessDenied())
     }
 

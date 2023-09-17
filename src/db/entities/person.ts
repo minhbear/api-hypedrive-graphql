@@ -1,12 +1,5 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql'
-import { 
-  CreateDateColumn, 
-  DeleteDateColumn, 
-  PrimaryGeneratedColumn, 
-  UpdateDateColumn, 
-  Column, 
-  Entity 
-} from 'typeorm'
+import { CreateDateColumn, DeleteDateColumn, PrimaryGeneratedColumn, UpdateDateColumn, Column, Entity } from 'typeorm'
 
 import * as bcrypt from 'bcrypt'
 

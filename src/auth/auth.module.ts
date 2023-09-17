@@ -10,12 +10,7 @@ import { RefreshTokenStrategy } from 'src/providers/strategies/refreshToken.stra
 import { PersonModule } from 'src/person/person.module'
 
 @Module({
-  imports: [
-    JwtModule.register({}), 
-    FilmMakerModule, 
-    TypeOrmModule.forFeature([PersonEntity]),
-    PersonModule
-  ],
+  imports: [JwtModule.register({}), FilmMakerModule, TypeOrmModule.forFeature([PersonEntity]), PersonModule],
   providers: [AuthResolver, AuthService, AccessTokenStrategy, RefreshTokenStrategy]
 })
 export class AuthModule {}

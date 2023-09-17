@@ -7,11 +7,10 @@ export const Message = {
     Incorrect: (message: string) => `${message}_is_incorrect`,
     AccessDenied: () => `access_denied`
   },
-  User: {
-  }
+  User: {}
 }
 
 export const MessageName = {
   user: 'user',
-  filmMaker: 'filmMaker',
+  filmMaker: 'filmMaker'
 }
