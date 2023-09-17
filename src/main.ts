@@ -20,7 +20,8 @@ async function bootstrap() {
     Logger.log(`🤬  Application is running on: ${await app.getUrl()}`, 'NestJS', false)
     Logger.log(`🚀  Server ready at http://${domain}:${port}`, 'Bootstrap', false)
     Logger.log(`##########################################################`, 'Bootstrap', false)
-    Logger.warn(`🚀  Film Maker Server http://${domain}:${port}/superadmin/graphql`, 'Bootstrap', false)
+    Logger.warn(`🚀  Server http://${domain}:${port}/graphql`, 'Bootstrap', false)
+    Logger.warn(`🚀  Server playground http://${domain}:${port}/graphql/playground`, 'Bootstrap', false)
     Logger.log(`##########################################################`, 'Bootstrap', false)
     Logger.log(`🚀  Server is listening on port ${port}`, 'Bootstrap', false)
   } catch (error) {

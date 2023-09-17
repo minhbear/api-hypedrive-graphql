@@ -13,7 +13,7 @@ export const configData: DataSourceOptions = {
   // After development turn off this synchronization
   synchronize: true,
   logging: false,
-  entities: ['dist/**/*.entity.js']
+  entities: ['dist/db/entities/*.js']
 }
 
 export default new DataSource(configData)

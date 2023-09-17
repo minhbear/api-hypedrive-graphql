@@ -12,5 +12,12 @@ export const config = {
     user: process.env.DB_USER || 'postgres',
     password: process.env.DB_PASS || 'Minh0914121791',
     databaseName: process.env.DB_NAME || 'postgres'
+  },
+  bcrypt: {
+    salt: 10
+  },
+  secrets: {
+    accessToken: process.env.JWT_ACCESS_TOKEN,
+    refreshToken: process.env.JWT_REFRESH_TOKEN
   }
 }
