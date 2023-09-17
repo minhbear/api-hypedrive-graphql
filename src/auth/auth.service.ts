@@ -85,7 +85,7 @@ export class AuthService {
   async refreshToken(personId: number, refreshToken: string): Promise<ReturnTokenDto> {
     const person = await this.personRepository.findOne({ where: { id: personId } })
 
-    if(!person || !person.refreshToken) {
+    if(!person?.refreshToken) {
       throw new ForbiddenException(Message.Base.AccessDenied())
     }
 
