@@ -9,6 +9,7 @@ import { GraphQLError } from 'graphql'
 import { ConfigModule } from '@nestjs/config'
 import { AuthModule } from './auth/auth.module'
 import { PersonModule } from './person/person.module'
+import { RoleModule } from './role/role.module'
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { PersonModule } from './person/person.module'
     FilmMakerModule,
     AuthModule,
     PersonModule,
+    RoleModule,
     TypeOrmModule.forRoot(configData)
   ],
   providers: []

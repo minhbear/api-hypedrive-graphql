@@ -10,8 +10,13 @@ export class PersonService {
     private readonly personRepository: Repository<PersonEntity>
   ) {}
 
-  async findById(id: number): Promise<PersonEntity> {
-    const person = await this.personRepository.findOne({ where: { id } })
+  async findById(id: number, relations?: string[]): Promise<PersonEntity> {
+    const person = await this.personRepository.findOne(
+      {
+        where: { id },
+        relations
+      },
+    )
 
     if (!person) {
       throw new NotFoundException(Message.Base.NotFound(MessageName.user))

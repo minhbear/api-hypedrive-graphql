@@ -20,8 +20,7 @@ export class AuthService {
   ) {}
 
   async signUp({ email, name, password, role }: CreateAccountDto): Promise<ReturnAccountDto> {
-    // update find with the role
-    const personExist = await this.personRepository.findOne({ where: { email } })
+    const personExist = await this.personRepository.findOne({ where: { email, role } })
 
     if (personExist) {
       throw new BadRequestException(Message.Base.NotFound(MessageName.user))

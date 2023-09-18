@@ -1,7 +1,8 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql'
-import { CreateDateColumn, DeleteDateColumn, PrimaryGeneratedColumn, UpdateDateColumn, Column, Entity } from 'typeorm'
+import { CreateDateColumn, DeleteDateColumn, PrimaryGeneratedColumn, UpdateDateColumn, Column, Entity, OneToOne, JoinColumn } from 'typeorm'
 
 import * as bcrypt from 'bcrypt'
+import { RoleEntity } from './role'
 
 @Entity('person')
 @ObjectType({ isAbstract: true })
@@ -37,8 +38,6 @@ export class PersonEntity {
   // @Column()
   // following: number
 
-  // ROLE
-
   @Field({ nullable: true })
   @Column({ nullable: true })
   description: string | null
@@ -55,6 +54,10 @@ export class PersonEntity {
 
   @DeleteDateColumn({ type: 'timestamptz' })
   deletedAt: Date
+
+  @OneToOne(() => RoleEntity)
+  @JoinColumn()
+  rolePerson: RoleEntity
 
   comparePassword(password: string) {
     return bcrypt.compareSync(password, this.password)

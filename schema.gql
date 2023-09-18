@@ -28,6 +28,13 @@ type PersonEntity {
   name: String!
   description: String
   refreshToken: String
+  role: Role!
+}
+
+enum Role {
+  ADMIN
+  USER
+  FILMMAKER
 }
 
 type Mutation {
