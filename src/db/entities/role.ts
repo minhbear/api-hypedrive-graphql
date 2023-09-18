@@ -1,6 +1,6 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
 import { Field, ObjectType, ID } from '@nestjs/graphql'
-import { Role } from 'src/common/constant'
+import { ROLE } from 'src/common/constant'
 
 @Entity('role')
 @ObjectType({ isAbstract: true })
@@ -9,7 +9,7 @@ export class RoleEntity {
   @PrimaryGeneratedColumn('increment')
   id: number
 
-  @Field(() => Role)
+  @Field(() => ROLE)
   @Column()
-  role: Role
+  role: ROLE
 }

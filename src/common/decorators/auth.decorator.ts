@@ -1,6 +1,11 @@
-import { UseGuards, applyDecorators } from '@nestjs/common'
+import { SetMetadata, UseGuards, applyDecorators } from '@nestjs/common'
 import { AccessTokenGuard } from 'src/guards/accessToken.guard'
+import { RolesGuard } from 'src/guards/roles.guard'
 
-export function Auth() {
-  return applyDecorators(UseGuards(AccessTokenGuard))
+export function Auth(scopes?: string[]) {
+  if (scopes?.length > 0) {
+    return applyDecorators(SetMetadata('scopes', scopes), UseGuards(AccessTokenGuard, RolesGuard))
+  }
+
+  return applyDecorators(UseGuards(AccessTokenGuard)) 
 }

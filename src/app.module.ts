@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common'
+import { ClassSerializerInterceptor, Module } from '@nestjs/common'
 import { FilmMakerModule } from './filmMaker/filmMaker.module'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import * as _ from 'lodash'
@@ -10,6 +10,7 @@ import { ConfigModule } from '@nestjs/config'
 import { AuthModule } from './auth/auth.module'
 import { PersonModule } from './person/person.module'
 import { RoleModule } from './role/role.module'
+import { APP_INTERCEPTOR, Reflector } from '@nestjs/core'
 
 @Module({
   imports: [
@@ -44,6 +45,9 @@ import { RoleModule } from './role/role.module'
     RoleModule,
     TypeOrmModule.forRoot(configData)
   ],
-  providers: []
+  providers: [{
+    provide: APP_INTERCEPTOR,
+    useClass: ClassSerializerInterceptor
+  }]
 })
 export class AppModule {}

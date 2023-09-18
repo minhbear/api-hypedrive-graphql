@@ -1,13 +1,16 @@
 import { Args, ID, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql'
 import { FilmMakerService } from './filmMaker.service'
 import { PersonEntity } from 'src/db/entities/person'
-import { Role } from 'src/common/constant'
+import { ROLE } from 'src/common/constant'
 import { PersonService } from 'src/person/person.service'
+import { Auth } from 'src/common/decorators/auth.decorator'
+import { ROLES_KEY } from 'src/common/decorators/roles.decorator'
 
 @Resolver(PersonEntity)
 export class FilmMakerResolver {
   constructor(private readonly filmMakerService: FilmMakerService, private readonly personService: PersonService) {}
 
+  @Auth([ROLES_KEY])
   @Query(() => String)
   helloFilmMaker() {
     return 'hello'
@@ -18,8 +21,8 @@ export class FilmMakerResolver {
     return await this.filmMakerService.findOne(id)
   }
 
-  @ResolveField(() => Role)
-  async role(@Parent() person: PersonEntity): Promise<Role> {
+  @ResolveField(() => ROLE)
+  async role(@Parent() person: PersonEntity): Promise<ROLE> {
     await this.personService.findById(person.id)
 
     return (await this.personService.findById(person.id, ['rolePerson'])).rolePerson.role

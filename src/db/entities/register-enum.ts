@@ -1,4 +1,4 @@
 import { registerEnumType } from '@nestjs/graphql'
-import { Role } from '../../common/constant'
+import { ROLE } from '../../common/constant'
 
-registerEnumType(Role, { name: 'Role' })
+registerEnumType(ROLE, { name: 'Role' })
