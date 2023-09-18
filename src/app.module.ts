@@ -45,9 +45,11 @@ import { APP_INTERCEPTOR, Reflector } from '@nestjs/core'
     RoleModule,
     TypeOrmModule.forRoot(configData)
   ],
-  providers: [{
-    provide: APP_INTERCEPTOR,
-    useClass: ClassSerializerInterceptor
-  }]
+  providers: [
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: ClassSerializerInterceptor
+    }
+  ]
 })
 export class AppModule {}

@@ -7,5 +7,5 @@ export function Auth(scopes?: string[]) {
     return applyDecorators(SetMetadata('scopes', scopes), UseGuards(AccessTokenGuard, RolesGuard))
   }
 
-  return applyDecorators(UseGuards(AccessTokenGuard)) 
+  return applyDecorators(UseGuards(AccessTokenGuard))
 }
