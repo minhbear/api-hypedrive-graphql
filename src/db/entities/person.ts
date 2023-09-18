@@ -1,5 +1,14 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql'
-import { CreateDateColumn, DeleteDateColumn, PrimaryGeneratedColumn, UpdateDateColumn, Column, Entity, OneToOne, JoinColumn } from 'typeorm'
+import {
+  CreateDateColumn,
+  DeleteDateColumn,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+  Column,
+  Entity,
+  OneToOne,
+  JoinColumn
+} from 'typeorm'
 
 import * as bcrypt from 'bcrypt'
 import { RoleEntity } from './role'

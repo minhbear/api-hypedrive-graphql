@@ -6,10 +6,7 @@ import { PersonService } from 'src/person/person.service'
 
 @Resolver(PersonEntity)
 export class FilmMakerResolver {
-  constructor(
-    private readonly filmMakerService: FilmMakerService,
-    private readonly personService: PersonService
-    ) {}
+  constructor(private readonly filmMakerService: FilmMakerService, private readonly personService: PersonService) {}
 
   @Query(() => String)
   helloFilmMaker() {

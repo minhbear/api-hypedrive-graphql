@@ -15,7 +15,7 @@ export class ConnectToDb {
       if (this.connectionManager.has(connectionName)) {
         console.log(`>>> Connection Manager has "${connectionName}" connection. Reusing...`)
         connection = this.connectionManager.get(connectionName)
-        if(!connection.isConnected) {
+        if (!connection.isConnected) {
           console.log(`>>> The "${connectionName}" connection has been stopped. Reconnecting...`)
           connection = await connection.connect()
         }
