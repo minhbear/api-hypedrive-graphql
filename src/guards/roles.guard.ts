@@ -1,27 +1,29 @@
-import { CanActivate, ExecutionContext } from '@nestjs/common'
+import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common'
 import { Reflector } from '@nestjs/core'
 import { GqlExecutionContext } from '@nestjs/graphql'
-import { Observable } from 'rxjs'
 import { ROLE } from 'src/common/constant'
 import { ROLES_KEY } from 'src/common/decorators/roles.decorator'
+import { PersonEntity } from 'src/db/entities/person'
 
+@Injectable()
 export class RolesGuard implements CanActivate {
   constructor(private readonly _reflector: Reflector) {}
 
   canActivate(context: ExecutionContext): boolean {
-    // const requiredRoles = this._reflector.get<ROLE>(ROLES_KEY, context.getHandler())
+    const requiredRoles = this._reflector.get<ROLE>(ROLES_KEY, context.getHandler())
 
-    // if(!requiredRoles) {
-    //   return true
-    // }
+    if (!requiredRoles) {
+      return true
+    }
 
     const ctx = GqlExecutionContext.create(context)
 
-    const {
-      req: { user }
-    } = ctx.getContext()
-    console.log('Role Guard >>>>>', user)
+    const user = ctx.getContext().req.user as PersonEntity
 
-    return true
+    if (!user) {
+      return false
+    }
+
+    return requiredRoles.includes(user.rolePerson.role)
   }
 }

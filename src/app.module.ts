@@ -11,13 +11,14 @@ import { AuthModule } from './auth/auth.module'
 import { PersonModule } from './person/person.module'
 import { RoleModule } from './role/role.module'
 import { APP_INTERCEPTOR, Reflector } from '@nestjs/core'
+import { join } from 'path'
 
 @Module({
   imports: [
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       playground: true,
-      autoSchemaFile: 'schema.gql',
+      autoSchemaFile: join(process.cwd(), `/src/schema.gql`),
       path: `/graphql`,
       formatError: (error: GraphQLError) => {
         const message = _.isArray(error.message) ? error.message : [error.message]
