@@ -3,6 +3,7 @@ import { ClassSerializerInterceptor, Logger, ValidationPipe } from '@nestjs/comm
 import { AppModule } from './app.module'
 import { APILogger } from './config/logger'
 import { config } from './config'
+import { isDevelopment } from './utils'
 
 async function bootstrap() {
   try {
@@ -17,13 +18,14 @@ async function bootstrap() {
 
     await app.listen(port)
 
-    Logger.log(`🤬  Application is running on: ${await app.getUrl()}`, 'NestJS', false)
-    Logger.log(`🚀  Server ready at http://${domain}:${port}`, 'Bootstrap', false)
-    Logger.log(`##########################################################`, 'Bootstrap', false)
-    Logger.warn(`🚀  Server http://${domain}:${port}/graphql`, 'Bootstrap', false)
-    Logger.warn(`🚀  Server playground http://${domain}:${port}/graphql/playground`, 'Bootstrap', false)
-    Logger.log(`##########################################################`, 'Bootstrap', false)
-    Logger.log(`🚀  Server is listening on port ${port}`, 'Bootstrap', false)
+    isDevelopment
+      ? (Logger.log(`🤬  Application is running on: ${await app.getUrl()}`, 'NestJS', false),
+        Logger.log(`🚀  Server ready at http://${domain}:${port}`, 'Bootstrap', false),
+        Logger.log(`##########################################################`, 'Bootstrap', false),
+        Logger.warn(`🚀  Server http://${domain}:${port}/graphql`, 'Bootstrap', false),
+        Logger.warn(`🚀  Server playground http://${domain}:${port}/graphql/playground`, 'Bootstrap', false),
+        Logger.log(`##########################################################`, 'Bootstrap', false))
+      : Logger.log(`🚀  Server is listening on port ${port}`, 'Bootstrap', false)
   } catch (error) {
     Logger.error(`❌  Error starting server, ${error}`, '', 'Bootstrap', false)
     process.exit()
