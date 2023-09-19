@@ -1,8 +1,12 @@
 import * as dotenv from 'dotenv'
+import { APP_ENV } from 'src/common/constant'
 
 dotenv.config()
 
 export const config = {
+  api: {
+    nodeEnv: process.env.APP_ENV || APP_ENV.DEV
+  },
   domain: process.env.APP_HOST || 'localhost',
   port: process.env.APP_PORT || 3000,
   db: {
@@ -19,5 +23,12 @@ export const config = {
   secrets: {
     accessToken: process.env.JWT_ACCESS_TOKEN,
     refreshToken: process.env.JWT_REFRESH_TOKEN
+  },
+  rpcUrl: {
+    devnet: "devnet"
+  },
+  admin: {
+    // wallet address that admin will sign transaction when film maker action create a collection for their NFT collection
+    publickKey: process.env.ADMIN_PUBLICK_KEY || '89Fh4QKhCEJ5rC1Bf4utchfmqPNejYTfjoW6VxDL8YqB'
   }
 }

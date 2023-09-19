@@ -7,11 +7,13 @@ import {
   Column,
   Entity,
   OneToOne,
-  JoinColumn
+  JoinColumn,
+  OneToMany
 } from 'typeorm'
 
 import * as bcrypt from 'bcrypt'
 import { RoleEntity } from './role'
+import { FilmEntity } from './film'
 
 @Entity('person')
 @ObjectType({ isAbstract: true })
@@ -22,19 +24,23 @@ export class PersonEntity {
 
   @Field({ nullable: true })
   @Column({ nullable: true })
-  publicKey?: string | null
+  publicKey: string | null
 
   @Field({ nullable: true })
   @Column({ nullable: true })
-  email?: string | null
+  email: string | null
 
   @Field({ nullable: true })
   @Column({ nullable: true })
-  password?: string | null
+  password: string | null
 
   @Field({ nullable: true })
   @Column({ nullable: true })
-  avatar?: string | null
+  avatar: string | null
+
+  @Field({ nullable: true })
+  @Column({ nullable: true })
+  background: string | null
 
   @Field()
   @Column()
@@ -49,7 +55,23 @@ export class PersonEntity {
 
   @Field({ nullable: true })
   @Column({ nullable: true })
-  description: string | null
+  bio: string | null
+
+  @Field({ nullable: true })
+  @Column({ nullable: true })
+  discord: string | null
+
+  @Field({ nullable: true })
+  @Column({ nullable: true })
+  youtube: string | null
+
+  @Field({ nullable: true })
+  @Column({ nullable: true })
+  twitter: string | null
+
+  @Field({ nullable: true })
+  @Column({ nullable: true })
+  instagram: string | null
 
   @Field({ nullable: true })
   @Column({ nullable: true })
@@ -67,6 +89,9 @@ export class PersonEntity {
   @OneToOne(() => RoleEntity)
   @JoinColumn()
   rolePerson: RoleEntity
+
+  @OneToMany(() => FilmEntity, (film) => film.person)
+  films: FilmEntity[]
 
   comparePassword(password: string) {
     return bcrypt.compareSync(password, this.password)

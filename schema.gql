@@ -25,8 +25,13 @@ type PersonEntity {
   email: String
   password: String
   avatar: String
+  background: String
   name: String!
-  description: String
+  bio: String
+  discord: String
+  youtube: String
+  twitter: String
+  instagram: String
   refreshToken: String
   role: Role!
 }

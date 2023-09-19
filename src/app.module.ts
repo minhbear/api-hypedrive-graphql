@@ -10,15 +10,16 @@ import { ConfigModule } from '@nestjs/config'
 import { AuthModule } from './auth/auth.module'
 import { PersonModule } from './person/person.module'
 import { RoleModule } from './role/role.module'
-import { APP_INTERCEPTOR, Reflector } from '@nestjs/core'
+import { APP_INTERCEPTOR } from '@nestjs/core'
 import { join } from 'path'
+import { NFTModule } from './nft/nft.module'
 
 @Module({
   imports: [
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       playground: true,
-      autoSchemaFile: join(process.cwd(), `/src/schema.gql`),
+      autoSchemaFile: join(process.cwd(), `/schema.gql`),
       path: `/graphql`,
       formatError: (error: GraphQLError) => {
         const message = _.isArray(error.message) ? error.message : [error.message]
@@ -44,6 +45,7 @@ import { join } from 'path'
     AuthModule,
     PersonModule,
     RoleModule,
+    NFTModule,
     TypeOrmModule.forRoot(configData)
   ],
   providers: [
