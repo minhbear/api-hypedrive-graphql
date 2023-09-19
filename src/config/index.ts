@@ -25,7 +25,7 @@ export const config = {
     refreshToken: process.env.JWT_REFRESH_TOKEN
   },
   rpcUrl: {
-    devnet: "devnet"
+    devnet: 'devnet'
   },
   admin: {
     // wallet address that admin will sign transaction when film maker action create a collection for their NFT collection

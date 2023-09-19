@@ -90,7 +90,7 @@ export class PersonEntity {
   @JoinColumn()
   rolePerson: RoleEntity
 
-  @OneToMany(() => FilmEntity, (film) => film.person)
+  @OneToMany(() => FilmEntity, film => film.person)
   films: FilmEntity[]
 
   comparePassword(password: string) {
