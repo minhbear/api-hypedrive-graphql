@@ -12,7 +12,7 @@ export const configData = {
   database: databaseName,
   // After development turn off this synchronization
   synchronize: true,
-  logging: false,
+  logging: true,
   entities: ['dist/db/entities/*{.ts,.js}'],
   migrations: ['dist/db/migrations/*{.ts,.js}'],
   cli: {

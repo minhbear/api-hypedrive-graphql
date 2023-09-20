@@ -8,7 +8,8 @@ import {
   Entity,
   OneToOne,
   JoinColumn,
-  OneToMany
+  OneToMany,
+  ManyToOne
 } from 'typeorm'
 
 import * as bcrypt from 'bcrypt'
@@ -19,7 +20,7 @@ import { FilmEntity } from './film'
 @ObjectType({ isAbstract: true })
 export class PersonEntity {
   @Field(() => ID)
-  @PrimaryGeneratedColumn('increment')
+  @PrimaryGeneratedColumn()
   id: number
 
   @Field({ nullable: true })
@@ -86,11 +87,10 @@ export class PersonEntity {
   @DeleteDateColumn({ type: 'timestamptz' })
   deletedAt: Date
 
-  @OneToOne(() => RoleEntity)
-  @JoinColumn()
+  @ManyToOne(() => RoleEntity, (role) => role.persons)
   rolePerson: RoleEntity
 
-  @OneToMany(() => FilmEntity, film => film.person)
+  @OneToMany(() => FilmEntity, film => film.person, { nullable: true })
   films: FilmEntity[]
 
   comparePassword(password: string) {
