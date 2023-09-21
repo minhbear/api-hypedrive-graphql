@@ -9,7 +9,7 @@ import { FilmEventEntity } from './filmEvent'
 @ObjectType({ isAbstract: true })
 export class FilmEntity {
   @Field(() => ID)
-  @PrimaryGeneratedColumn('increment')
+  @PrimaryGeneratedColumn()
   id: number
 
   @Field()

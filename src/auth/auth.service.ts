@@ -10,34 +10,39 @@ import { PersonEntity } from 'src/db/entities/person'
 import { Message, MessageName } from 'src/common/message'
 import { config } from 'src/config'
 import { ReturnMessageBase } from 'src/common/interface/returnBase'
+import { RoleEntity } from '@/db/entities/role'
 
 @Injectable()
 export class AuthService {
   constructor(
     @InjectRepository(PersonEntity)
     private personRepository: Repository<PersonEntity>,
+    @InjectRepository(RoleEntity)
+    private roleRepository: Repository<RoleEntity>,
     private jwtService: JwtService
   ) {}
 
   async signUp({ email, name, password, role }: CreateAccountDto): Promise<ReturnAccountDto> {
-    const personExist = await this.personRepository.findOne({ where: { email, role } })
+    const personExist = await this.personRepository.findOne({ where: { email } })
 
     if (personExist) {
-      throw new BadRequestException(Message.Base.NotFound(MessageName.user))
+      throw new BadRequestException(Message.Base.Exists(MessageName.user))
     }
 
     const hashPassword = this.hashData(password)
 
-    const newPerson = this.personRepository.create({
+    const rolePerson = await this.roleRepository.findOne({ where: { role } })
+    const personData = this.personRepository.create({
       email,
       name,
-      password: hashPassword
+      password: hashPassword,
+      rolePerson
     })
+    const newPerson = await this.personRepository.save(personData)
     const tokens = await this.getTokens(newPerson.id, email)
     const hashRefreshToken = this.hashData(tokens.refreshToken)
     newPerson.refreshToken = hashRefreshToken
-
-    await this.personRepository.save(newPerson)
+    await this.personRepository.update({ id: newPerson.id }, { refreshToken: hashRefreshToken })
 
     delete newPerson.password
 

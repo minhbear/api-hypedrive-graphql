@@ -15,6 +15,7 @@ export class AccessTokenStrategy extends PassportStrategy(Strategy, 'jwt') {
   }
 
   async validate(payload: JWTPayload) {
+    console.log(payload)
     return await this.personService.findById(parseInt(payload.sub), ['rolePerson'])
   }
 }
