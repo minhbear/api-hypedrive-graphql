@@ -28,12 +28,7 @@ export class CreateAccountDto {
 export class SignInDto {
   @Field()
   @IsNotEmpty()
-  @IsEmail()
-  email: string
-
-  @Field()
-  @IsNotEmpty()
-  password: string
+  publicKey: string
 }
 
 @ObjectType({ isAbstract: true })
