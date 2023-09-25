@@ -31,4 +31,4 @@ jobs:
           # Add the following line to add the host key to known hosts
           ssh-keyscan -H 45.77.182.167 >> ~/.ssh/known_hosts
           # Replace with your VPS SSH connection details and deployment script
-          ssh -i ~/.ssh/id_rsa root@45.77.182.167 "cd ~/filmatron/filmatron-server && git reset --hard origin/master && git pull origin master && rm -rf node_modules && npm install && npm run deploy:prod"
+          ssh -i ~/.ssh/id_rsa root@45.77.182.167 "cd ~/filmatron/filmatron-server && git reset --hard origin/master && git pull origin master && rm -rf node_modules && npm install --legacy-peer-deps && npm run deploy:prod"
