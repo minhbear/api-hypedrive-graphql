@@ -33,14 +33,15 @@ jobs:
           # Add the VPS host key to known_hosts
           ssh-keyscan -H 45.77.182.167 >> ~/.ssh/known_hosts
           # SSH into the server and run deployment commands
-          ssh -i ~/.ssh/id_rsa root@45.77.182.167
-          cd ~/filmatron/filmatron-server
-          git reset --hard origin/master
-          git pull origin master
-          rm -rf node_modules
-          nvm install 18.18.0 # Install the desired Node.js version
-          nvm use 18.18.0 # Use the desired Node.js version
-          node -v # Display Node.js version (for debugging)
-          npm -v # Display npm version (for debugging)
-          npm install --legacy-peer-deps
-          npm run deploy:prod
+          ssh -i ~/.ssh/id_rsa root@45.77.182.167 'bash -s' <<EOF
+            cd ~/filmatron/filmatron-server
+            git reset --hard origin/master
+            git pull origin master
+            rm -rf node_modules
+            nvm install 18.18.0 # Install the desired Node.js version
+            nvm use 18.18.0 # Use the desired Node.js version
+            node -v # Display Node.js version (for debugging)
+            npm -v # Display npm version (for debugging)
+            npm install --legacy-peer-deps
+            npm run deploy:prod
+EOF
