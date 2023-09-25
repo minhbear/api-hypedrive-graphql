@@ -15,13 +15,14 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Run Deployment script
-      env:
-        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-      run: |
-        mkdir -p ~/.ssh
-        echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-        chmod 600 ~/.ssh/id_rsa
-        # Add the following line to add the host key to known hosts
-        ssh-keyscan -H 45.77.182.167 >> ~/.ssh/known_hosts
-        # Replace with your VPS SSH connection details and deployment script
-        ssh -i ~/.ssh/id_rsa root@45.77.182.167 "cd /filmatron/filmatron-server && git pull origin master && npm install && npm run deploy:prod"
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "SSH_PRIVATE_KEY: $SSH_PRIVATE_KEY"  # Add this line for debugging
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          # Add the following line to add the host key to known hosts
+          ssh-keyscan -H 45.77.182.167 >> ~/.ssh/known_hosts
+          # Replace with your VPS SSH connection details and deployment script
+          ssh -i ~/.ssh/id_rsa root@45.77.182.167 "cd /filmatron/filmatron-server && git pull origin master && npm install && npm run deploy:prod"
