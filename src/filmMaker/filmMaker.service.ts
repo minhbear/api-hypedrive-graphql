@@ -49,6 +49,7 @@ export class FilmMakerService {
       throw new NotFoundException(Message.Base.NotFound(MessageName.film))
     }
 
+    console.log('>>>>>>>', config.admin.secretKey)
     const adminKeypair = Keypair.fromSecretKey(bs58.decode(config.admin.secretKey))
 
     const { masterEditionAccount, metadataAccount, mint, tokenAccount } = await this.nftService.createCollection({

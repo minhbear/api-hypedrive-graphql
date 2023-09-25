@@ -12,5 +12,6 @@ export const Message = {
 
 export const MessageName = {
   user: 'user',
-  filmMaker: 'filmMaker'
+  filmMaker: 'filmMaker',
+  film: 'film'
 }

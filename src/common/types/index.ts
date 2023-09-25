@@ -1,4 +1,5 @@
-import { Field, ObjectType } from '@nestjs/graphql'
+import { Field, InputType, ObjectType } from '@nestjs/graphql'
+import { PublicKey } from '@solana/web3.js'
 
 export type JWTPayload = {
   sub: string
@@ -6,6 +7,7 @@ export type JWTPayload = {
 }
 
 @ObjectType({ isAbstract: true })
+@InputType({ isAbstract: true })
 export class FilmTopCast {
   @Field()
   name: string
@@ -31,4 +33,11 @@ export interface TokenPayload {
   verifierId: string
   aggregateVerifier: string
   exp: number
+}
+
+export class CollectionData {
+  mint: PublicKey
+  tokenAccount: PublicKey
+  metadataAccount: PublicKey
+  masterEditionAccount: PublicKey
 }

@@ -16,8 +16,6 @@ export class PersonService {
       relations
     })
 
-    console.log("persson>?>>>>", person)
-
     if (!person) {
       throw new NotFoundException(Message.Base.NotFound(MessageName.user))
     }
