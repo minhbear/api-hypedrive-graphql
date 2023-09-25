@@ -14,10 +14,9 @@ import { APP_INTERCEPTOR } from '@nestjs/core'
 import { join } from 'path'
 import { NFTModule } from './nft/nft.module'
 import { AdminModule } from './admin/admin.module'
-import { RestController } from './app.controller'
+import { FilmModule } from './film/film.module'
 
 @Module({
-  controllers: [RestController],
   imports: [
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
@@ -50,6 +49,7 @@ import { RestController } from './app.controller'
     RoleModule,
     NFTModule,
     AdminModule,
+    FilmModule,
     TypeOrmModule.forRoot(configData)
   ],
   providers: [
