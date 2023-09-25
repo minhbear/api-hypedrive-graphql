@@ -44,4 +44,4 @@ jobs:
             npm -v # Display npm version (for debugging)
             npm install --legacy-peer-deps
             npm run deploy:prod
-EOF
+
