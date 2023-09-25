@@ -15,9 +15,9 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Run Deployment script
-        env:
+      env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-        run: |
+      run: |
           mkdir -p ~/.ssh
           echo "SSH_PRIVATE_KEY: $SSH_PRIVATE_KEY"  # Add this line for debugging
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
