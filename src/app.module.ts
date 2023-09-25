@@ -14,6 +14,7 @@ import { APP_INTERCEPTOR } from '@nestjs/core'
 import { join } from 'path'
 import { NFTModule } from './nft/nft.module'
 import { AdminModule } from './admin/admin.module'
+import { FilmModule } from './film/film.module'
 
 @Module({
   imports: [
@@ -48,6 +49,7 @@ import { AdminModule } from './admin/admin.module'
     RoleModule,
     NFTModule,
     AdminModule,
+    FilmModule,
     TypeOrmModule.forRoot(configData)
   ],
   providers: [

@@ -30,6 +30,7 @@ export const config = {
   rpcUrl: CLUSTER.DEV_NET,
   admin: {
     // wallet address that admin will sign transaction when film maker action create a collection for their NFT collection
-    publickKey: process.env.ADMIN_PUBLICK_KEY || '89Fh4QKhCEJ5rC1Bf4utchfmqPNejYTfjoW6VxDL8YqB'
+    publickKey: process.env.ADMIN_PUBLICK_KEY || '89Fh4QKhCEJ5rC1Bf4utchfmqPNejYTfjoW6VxDL8YqB',
+    secretKey: process.env.ADMIN_SECRET_KEY
   }
 }

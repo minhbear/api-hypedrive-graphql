@@ -43,8 +43,10 @@ enum Role {
 }
 
 type Mutation {
-  signup(input: CreateAccountDto!): ReturnAccountDto!
+  signUp(input: CreateAccountDto!): ReturnAccountDto!
   signIn(input: SignInDto!): ReturnAccountDto!
+  createFilm(input: CreateFilmDto!): ReturnMessageBase!
+  createCollection(input: CreateCollectionNFTDto!): ReturnMessageBase!
 }
 
 type ReturnAccountDto {
@@ -63,4 +65,44 @@ input CreateAccountDto {
 input SignInDto {
   email: String!
   password: String!
+}
+
+input CreateFilmDto {
+  name: String!
+  description: String!
+  duration: Int!
+  releaseDate: String!
+  genres: [FilmGenre!]! = []
+  stars: [String!]! = []
+  directors: [String!]! = []
+  status: FilmStatus!
+  topCasts: [FilmTopCast!]! = []
+  gallery: [String!]! = []
+}
+
+enum FilmGenre {
+  DRAMA
+  ADVENTURE
+  COMEDY
+}
+
+enum FilmStatus {
+  COMMING_SOON
+  ON_GOING
+}
+
+input FilmTopCast {
+  name: String!
+  avatar: String!
+}
+
+input CreateCollectionNFTDto {
+  id: Float!
+  metadata: CollectionMetadataDto!
+}
+
+input CollectionMetadataDto {
+  name: String!
+  symbol: String!
+  uri: String!
 }
