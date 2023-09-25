@@ -11,24 +11,29 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Set up Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: 18.18.0
-        
     - name: Checkout code
       uses: actions/checkout@v2
   
-        
     - name: Run Deployment script
       env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
       run: |
+          # Create SSH directory and add private key
           mkdir -p ~/.ssh
           echo "SSH_PRIVATE_KEY: $SSH_PRIVATE_KEY"  # Add this line for debugging
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          # Add the following line to add the host key to known hosts
+
+          # Add the VPS host key to known_hosts
           ssh-keyscan -H 45.77.182.167 >> ~/.ssh/known_hosts
-          # Replace with your VPS SSH connection details and deployment script
-          ssh -i ~/.ssh/id_rsa root@45.77.182.167 "cd ~/filmatron/filmatron-server && git reset --hard origin/master && git pull origin master && rm -rf node_modules && npm install --legacy-peer-deps && npm run deploy:prod"
+
+          # SSH into the server and run deployment commands
+          ssh -i ~/.ssh/id_rsa root@45.77.182.167 "
+            cd ~/filmatron/filmatron-server &&
+            git reset --hard origin/master &&
+            git pull origin master &&
+            rm -rf node_modules &&
+            npm -v &&  # Display Node.js version on the server (for debugging)
+            node -v &&  # Display npm version on the server (for debugging)
+            npm install --legacy-peer-deps &&
+            npm run deploy:prod"
