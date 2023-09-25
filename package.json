@@ -6,6 +6,8 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
+    "deploy:prod": "npm run check-start || npm run build && pm2 start dist/main.js --name filmatron-server",
+    "check-start": "pm2 pid filmatron-server > /dev/null 2>&1 && pm2 restart filmatron-server || true",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
@@ -23,7 +25,6 @@
     "migration:create": "yarn typeorm migration:create -d src/db/migrations -n",
     "migration:run": "ts-node -r tsconfig-paths/register src/db/runMigrations.ts apply",
     "migration:revert": "ts-node -r tsconfig-paths/register src/db/runMigrations.ts revert",
-    "deploy:prod": "npm run build && pm2 start dist/main.js --name filmatron-server"
   },
   "dependencies": {
     "@apollo/server": "^4.9.3",
