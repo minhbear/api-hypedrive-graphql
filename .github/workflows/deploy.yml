@@ -23,4 +23,4 @@ jobs:
         chmod 600 ~/.ssh/id_rsa
 
         # Replace with your VPS SSH connection details and deployment script
-        ssh -i ~/.ssh/id_rsa user@vps_ip_address "cd /filmatron/filmatron-server && git pull origin master && npm install && npm run deploy:prod"
+        ssh -i ~/.ssh/id_rsa root@45.77.182.167 "cd /filmatron/filmatron-server && git pull origin master && npm install && npm run deploy:prod"
