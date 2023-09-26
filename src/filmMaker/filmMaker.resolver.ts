@@ -40,6 +40,3 @@ export class FilmMakerResolver {
     return (await this.personService.findById(person.id, ['rolePerson'])).rolePerson.role
   }
 }
-
-// TODO: create api update film
-// TODO: test create collection
