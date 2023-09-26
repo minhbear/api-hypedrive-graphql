@@ -80,7 +80,6 @@ input CreateFilmDto {
   genres: [FilmGenre!]! = []
   stars: [String!]! = []
   directors: [String!]! = []
-  status: FilmStatus!
   topCasts: [FilmTopCast!]! = []
   gallery: [String!]! = []
 }
@@ -91,18 +90,13 @@ enum FilmGenre {
   COMEDY
 }
 
-enum FilmStatus {
-  COMMING_SOON
-  ON_GOING
-}
-
 input FilmTopCast {
   name: String!
   avatar: String!
 }
 
 input CreateCollectionNFTDto {
-  id: Float!
+  filmId: Float!
   metadata: CollectionMetadataDto!
 }
 

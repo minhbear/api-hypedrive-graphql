@@ -1,26 +1,29 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common'
+import { BadRequestException, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 import * as bs58 from 'bs58'
 import { PersonEntity } from 'src/db/entities/person'
-import { CreateCollectionNFTDto, CreateFilmDto } from './dto'
+import { CreateCollectionNFTDto, CreateCompressedNFTMetadataDto, CreateFilmDto } from './dto'
 import { ReturnMessageBase } from '@/common/interface/returnBase'
 import { NFTService } from '@/nft/nft.service'
 import { Connection, Keypair, PublicKey } from '@solana/web3.js'
 import { config } from '@/config'
-import { FilmCollectionNFT } from '@/db/entities/filmCollectionNFT'
+import { FilmCollectionNFTEntity } from '@/db/entities/filmCollectionNFT'
 import { FilmEntity } from '@/db/entities/film'
-import { Message, MessageName } from '@/common/message'
+import { GetFilmCommand } from '@/film/commands/GetFilm.command'
+import { FilmCompressedNFTEntity } from '@/db/entities/filmCompressedNFT'
 
 @Injectable()
 export class FilmMakerService {
   constructor(
     @InjectRepository(PersonEntity)
     private personRepository: Repository<PersonEntity>,
-    @InjectRepository(FilmCollectionNFT)
-    private filmCollectionNFTRepository: Repository<FilmCollectionNFT>,
+    @InjectRepository(FilmCollectionNFTEntity)
+    private filmCollectionNFTRepository: Repository<FilmCollectionNFTEntity>,
     @InjectRepository(FilmEntity)
     private filmRepository: Repository<FilmEntity>,
+    @InjectRepository(FilmCompressedNFTEntity)
+    private filmCompressedNFTRepository: Repository<FilmCompressedNFTEntity>,
     private nftService: NFTService
   ) {}
 
@@ -28,46 +31,35 @@ export class FilmMakerService {
     return await this.personRepository.findOneOrFail({ where: { id } })
   }
 
-  /**
-   * create film collection, save to the film collection nft. one-one film
-   */
   async createCollection(input: CreateCollectionNFTDto, person: PersonEntity): Promise<ReturnMessageBase> {
     if (!person.publicKey) {
       throw new BadRequestException(`FilmMaker needed provide publickey`)
     }
 
-    const film = await this.filmRepository.findOne({
-      where: {
-        id: input.id,
-        person: {
-          id: person.id
-        }
-      }
-    })
+    const { name, symbol, uri } = input.metadata
 
-    if (!film) {
-      throw new NotFoundException(Message.Base.NotFound(MessageName.film))
-    }
+    const film = await GetFilmCommand.getByFilmIdAndPersonId(input.filmId, person.id)
 
-    console.log('>>>>>>>', config.admin.secretKey)
     const adminKeypair = Keypair.fromSecretKey(bs58.decode(config.admin.secretKey))
 
-    const { masterEditionAccount, metadataAccount, mint, tokenAccount } = await this.nftService.createCollection({
+    const { masterEditionAccount, metadataAccount, mint, tokenAccount, treeKeypair } = await this.nftService.createCollection({
       adminKeypair,
       collectionMetadataDto: input.metadata,
       connection: new Connection(config.rpcUrl, 'confirmed'),
       filmMakerPubKey: new PublicKey(person.publicKey)
     })
 
-    const collectionData = this.filmCollectionNFTRepository.create({
+    await this.filmCollectionNFTRepository.save({
       film,
+      name,
+      symbol,
+      uri,
       masterEditionAccount: masterEditionAccount.toBase58(),
       metadataAccount: metadataAccount.toBase58(),
       mint: mint.toBase58(),
-      tokenAccount: tokenAccount.toBase58()
-    })
-
-    await this.filmCollectionNFTRepository.save(collectionData)
+      tokenAccount: tokenAccount.toBase58(),
+      treeKeypair: treeKeypair.toBase58()
+    } as FilmCollectionNFTEntity)
 
     return {
       message: `Create collection NFT for film success`,
@@ -75,10 +67,28 @@ export class FilmMakerService {
     }
   }
 
+  async createCompressedNFTMetadata(
+    input: CreateCompressedNFTMetadataDto,
+    person: PersonEntity
+  ): Promise<ReturnMessageBase> {
+    const { name, symbol, uri } = input.metadata
+    const film = await GetFilmCommand.getByFilmIdAndPersonId(input.filmId, person.id)
+
+    await this.filmCompressedNFTRepository.save({
+      film,
+      name,
+      symbol,
+      uri
+    } as FilmCompressedNFTEntity)
+
+    return {
+      message: `Create compressed NFT metadata for film success`,
+      success: true
+    }
+  }
+
   async createFilm(input: CreateFilmDto, person: PersonEntity): Promise<ReturnMessageBase> {
-    await this.filmRepository.save(
-      this.filmRepository.create({ ...input, person })
-    )
+    await this.filmRepository.save({ ...input, person } as FilmEntity)
 
     return {
       message: `Create film success`,

@@ -1,11 +1,14 @@
 import { Injectable } from '@nestjs/common'
 import { ValidDepthSizePair } from '@solana/spl-account-compression'
+import { MetadataArgs, TokenProgramVersion, TokenStandard } from '@metaplex-foundation/mpl-bubblegum'
 import { CreateMetadataAccountArgsV3 } from '@metaplex-foundation/mpl-token-metadata'
 import { Connection, Keypair, PublicKey } from '@solana/web3.js'
 import { CreateTreeCommand } from './commands/createTree.command'
 import { CreateCollectionCommand } from './commands/createCollection.command'
-import { CollectionMetadataDto } from '@/filmMaker/dto'
-import { CollectionData } from '@/common/types'
+import { CollectionMetadataDto, CompressedNFTMetadataDto } from '@/filmMaker/dto'
+import { CollectionInformation } from '@/common/types'
+import { FilmCollectionNFTEntity } from '@/db/entities/filmCollectionNFT'
+import { MintCompressedNFTCommand } from './commands/mintCompressedNFT.command'
 
 @Injectable()
 export class NFTService {
@@ -14,7 +17,7 @@ export class NFTService {
     filmMakerPubKey: PublicKey
     adminKeypair: Keypair
     collectionMetadataDto: CollectionMetadataDto
-  }): Promise<CollectionData> {
+  }): Promise<CollectionInformation> {
     const { adminKeypair, connection, filmMakerPubKey, collectionMetadataDto } = params
     const { name, symbol, uri } = collectionMetadataDto
 
@@ -62,10 +65,77 @@ export class NFTService {
       collectionDetails: null
     }
 
-    return await CreateCollectionCommand.createCollection({
+    const { masterEditionAccount, metadataAccount, mint, tokenAccount } =
+      await CreateCollectionCommand.createCollection({
+        connection,
+        metadataV3: collectionMetadatV3,
+        payer: adminKeypair
+      })
+
+    return {
+      masterEditionAccount,
+      metadataAccount,
+      mint,
+      tokenAccount,
+      treeKeypair: treeKeypair.publicKey
+    }
+  }
+
+  // Need to validate the mint, tokenAccount, etc ... when mint compressed nft
+  async mintCompressedNFT(params: {
+    compressedNFTMetadata: CompressedNFTMetadataDto
+    creatorPubKey: PublicKey
+    payer: Keypair
+    filmCollectionNFT: FilmCollectionNFTEntity
+    receiverAddress: PublicKey
+    connection: Connection
+  }): Promise<void> {
+    const { compressedNFTMetadata, creatorPubKey, filmCollectionNFT, receiverAddress, payer, connection } = params
+
+    const { name, symbol, uri } = compressedNFTMetadata
+    const { mint, metadataAccount, masterEditionAccount, treeKeypair } = filmCollectionNFT
+
+    const compressedMetadata: MetadataArgs = {
+      name,
+      symbol,
+      uri,
+      creators: [
+        {
+          address: creatorPubKey,
+          verified: false,
+          share: 100
+        }
+      ],
+      editionNonce: 0,
+      uses: null,
+      collection: null,
+      primarySaleHappened: false,
+      sellerFeeBasisPoints: 0,
+      isMutable: false,
+      // these values are taken from the Bubblegum package
+      tokenProgramVersion: TokenProgramVersion.Original,
+      tokenStandard: TokenStandard.NonFungible
+    }
+
+    // fully mint a single compressed NFT to the payer
+    console.log(`Minting a single compressed NFT to ${creatorPubKey.toBase58()}...`)
+    console.log(
+      `tree: ${treeKeypair}`,
+      `mint: ${mint}`,
+      `metadata: ${metadataAccount}`,
+      `master: ${masterEditionAccount}`,
+      `compressedMetadata: ${compressedMetadata}`
+    )
+
+    await MintCompressedNFTCommand.mintCompressedNFT({
       connection,
-      metadataV3: collectionMetadatV3,
-      payer: adminKeypair
+      payer,
+      treeAddress: new PublicKey(treeKeypair),
+      collectionMint: new PublicKey(mint),
+      collectionMasterEditionAccount: new PublicKey(masterEditionAccount),
+      collectionMetadata: new PublicKey(metadataAccount),
+      compressedNFTMetadata: compressedMetadata,
+      receiverAddress
     })
   }
 }

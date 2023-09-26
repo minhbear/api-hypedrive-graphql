@@ -5,11 +5,16 @@ import { FilmMakerService } from './filmMaker.service'
 import { PersonEntity } from 'src/db/entities/person'
 import { PersonModule } from 'src/person/person.module'
 import { NFTModule } from '@/nft/nft.module'
-import { FilmCollectionNFT } from '@/db/entities/filmCollectionNFT'
+import { FilmCollectionNFTEntity } from '@/db/entities/filmCollectionNFT'
 import { FilmEntity } from '@/db/entities/film'
+import { FilmCompressedNFTEntity } from '@/db/entities/filmCompressedNFT'
 
 @Module({
-  imports: [TypeOrmModule.forFeature([PersonEntity, FilmCollectionNFT, FilmEntity]), PersonModule, NFTModule],
+  imports: [
+    TypeOrmModule.forFeature([PersonEntity, FilmCollectionNFTEntity, FilmEntity, FilmCompressedNFTEntity]),
+    PersonModule,
+    NFTModule
+  ],
   providers: [FilmMakerResolver, FilmMakerService],
   exports: [FilmMakerService]
 })

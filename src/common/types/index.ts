@@ -41,3 +41,7 @@ export class CollectionData {
   metadataAccount: PublicKey
   masterEditionAccount: PublicKey
 }
+
+export class CollectionInformation extends CollectionData {
+  treeKeypair: PublicKey
+}

@@ -3,26 +3,42 @@ import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'ty
 import { FilmEntity } from './film'
 
 @Entity('film-collection-nft')
-export class FilmCollectionNFT {
+export class FilmCollectionNFTEntity {
   @Field(() => ID)
   @PrimaryGeneratedColumn()
   id: number
 
   @Field()
   @Column()
-  mint: string
+  name: string
 
   @Field()
   @Column()
-  tokenAccount: string
+  symbol: string
 
   @Field()
   @Column()
-  metadataAccount: string
+  uri: string
 
-  @Field()
-  @Column()
-  masterEditionAccount: string
+  @Field({ nullable: true })
+  @Column({ nullable: true })
+  mint?: string | null
+
+  @Field({ nullable: true })
+  @Column({ nullable: true })
+  tokenAccount?: string | null
+
+  @Field({ nullable: true })
+  @Column({ nullable: true })
+  metadataAccount?: string | null
+
+  @Field({ nullable: true })
+  @Column({ nullable: true })
+  masterEditionAccount?: string | null
+
+  @Field({ nullable: true })
+  @Column({ nullable: true })
+  treeKeypair?: string | null
 
   @OneToOne(() => FilmEntity)
   @JoinColumn()

@@ -1,6 +1,6 @@
 import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm'
 import { Field, ID, Int, ObjectType } from '@nestjs/graphql'
-import { FILM_GENRE, FILM_STATUS } from 'src/common/constant'
+import { FILM_GENRE, ADMIN_PROCESS_STATUS, FILM_STATUS } from 'src/common/constant'
 import { FilmTopCast } from 'src/common/types'
 import { PersonEntity } from './person'
 import { FilmEventEntity } from './filmEvent'
@@ -40,6 +40,10 @@ export class FilmEntity {
   @Column({ type: 'varchar', array: true, default: [] })
   directors: string[]
 
+  @Field(() => ADMIN_PROCESS_STATUS)
+  @Column({ type: 'varchar' })
+  adminProcess: ADMIN_PROCESS_STATUS
+
   @Field(() => FILM_STATUS)
   @Column({ type: 'varchar' })
   status: FILM_STATUS
@@ -51,6 +55,10 @@ export class FilmEntity {
   @Field(() => [String])
   @Column({ type: 'varchar', array: true, default: [] })
   gallery: string[]
+
+  // @Field(() => [String])
+  // @Column({ type: 'jsonb', array: true, default: [] })
+  // whiteList: string[]
 
   @ManyToOne(() => PersonEntity, person => person.films)
   person: PersonEntity
