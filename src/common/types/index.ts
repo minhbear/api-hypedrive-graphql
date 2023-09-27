@@ -7,7 +7,7 @@ export type JWTPayload = {
 }
 
 @ObjectType({ isAbstract: true })
-@InputType({ isAbstract: true })
+@InputType('FilmTopCastInput', { isAbstract: true })
 export class FilmTopCast {
   @Field()
   name: string

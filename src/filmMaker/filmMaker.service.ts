@@ -12,6 +12,7 @@ import { FilmCollectionNFTEntity } from '@/db/entities/filmCollectionNFT'
 import { FilmEntity } from '@/db/entities/film'
 import { GetFilmCommand } from '@/film/commands/GetFilm.command'
 import { FilmCompressedNFTEntity } from '@/db/entities/filmCompressedNFT'
+import { ADMIN_PROCESS_STATUS, FILM_STATUS } from '@/common/constant'
 
 @Injectable()
 export class FilmMakerService {
@@ -42,12 +43,13 @@ export class FilmMakerService {
 
     const adminKeypair = Keypair.fromSecretKey(bs58.decode(config.admin.secretKey))
 
-    const { masterEditionAccount, metadataAccount, mint, tokenAccount, treeKeypair } = await this.nftService.createCollection({
-      adminKeypair,
-      collectionMetadataDto: input.metadata,
-      connection: new Connection(config.rpcUrl, 'confirmed'),
-      filmMakerPubKey: new PublicKey(person.publicKey)
-    })
+    const { masterEditionAccount, metadataAccount, mint, tokenAccount, treeKeypair } =
+      await this.nftService.createCollection({
+        adminKeypair,
+        collectionMetadataDto: input.metadata,
+        connection: new Connection(config.rpcUrl, 'confirmed'),
+        filmMakerPubKey: new PublicKey(person.publicKey)
+      })
 
     await this.filmCollectionNFTRepository.save({
       film,
@@ -88,7 +90,15 @@ export class FilmMakerService {
   }
 
   async createFilm(input: CreateFilmDto, person: PersonEntity): Promise<ReturnMessageBase> {
-    await this.filmRepository.save({ ...input, person } as FilmEntity)
+    // Minh-27-9-2023: we add admin status approved by default to skip the step approval by admin. This status need to update bu admin
+    const film = await this.filmRepository.save({
+      ...input,
+      person,
+      status: FILM_STATUS.COMING_SOON,
+      adminProcess: ADMIN_PROCESS_STATUS.APPROVED
+    } as FilmEntity)
+
+    console.log(film)
 
     return {
       message: `Create film success`,

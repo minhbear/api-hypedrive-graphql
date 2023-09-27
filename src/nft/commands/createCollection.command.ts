@@ -1,4 +1,3 @@
-
 import { Connection, Keypair, PublicKey, Transaction, sendAndConfirmTransaction } from '@solana/web3.js'
 import { explorerURL, extractSignatureFromFailedTransaction } from '@/utils'
 import {
@@ -11,13 +10,12 @@ import { createAccount, createMint, mintTo, TOKEN_PROGRAM_ID } from '@solana/spl
 import { PROGRAM_ID as TOKEN_METADATA_PROGRAM_ID } from '@metaplex-foundation/mpl-token-metadata'
 import { CollectionData } from '@/common/types'
 
-
 export class CreateCollectionCommand {
-   /**
+  /**
    * Create an NFT collection on-chain, using the regular Metaplex standards
    * with the `payer` as the authority
    */
-   static async createCollection(params: {
+  static async createCollection(params: {
     connection: Connection
     payer: Keypair
     metadataV3: CreateMetadataAccountArgsV3
@@ -62,7 +60,7 @@ export class CreateCollectionCommand {
       undefined,
       TOKEN_PROGRAM_ID
     )
-    console.log(explorerURL({ txSignature: mintSig }));
+    console.log(explorerURL({ txSignature: mintSig }))
 
     // derive the PDA for the metadata account
     const [metadataAccount, _bump] = PublicKey.findProgramAddressSync(
@@ -95,7 +93,7 @@ export class CreateCollectionCommand {
       ],
       TOKEN_METADATA_PROGRAM_ID
     )
-    console.log(`Master edition account: ${masterEditionAccount.toBase58()}`  )
+    console.log(`Master edition account: ${masterEditionAccount.toBase58()}`)
 
     // create an instruction to create the metadata account
     const createMasterEditionIx = createCreateMasterEditionV3Instruction(
@@ -128,10 +126,7 @@ export class CreateCollectionCommand {
 
     try {
       // construct the transaction with our instructions, making the `payer` the `feePayer`
-      const tx = new Transaction()
-        .add(createMetadataIx)
-        .add(createMasterEditionIx)
-        .add(collectionSizeIX)
+      const tx = new Transaction().add(createMetadataIx).add(createMasterEditionIx).add(collectionSizeIX)
       tx.feePayer = payer.publicKey
 
       // send the transaction to the cluster

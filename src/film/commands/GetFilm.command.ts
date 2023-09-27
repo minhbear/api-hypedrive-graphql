@@ -20,4 +20,14 @@ export class GetFilmCommand {
 
     return film
   }
+
+  static async getFilmById(id: number, select?: any[]): Promise<FilmEntity> {
+    const film = await getRepository(FilmEntity).findOne({ where: { id }, select })
+
+    if (!film) {
+      throw new NotFoundException(Message.Base.NotFound(MessageName.film))
+    }
+
+    return film
+  }
 }

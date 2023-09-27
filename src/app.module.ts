@@ -37,7 +37,7 @@ import { FilmModule } from './film/film.module'
 
         return errorFormatted
       },
-      include: [FilmMakerModule, AuthModule]
+      include: [FilmMakerModule, AuthModule, FilmModule]
     }),
     ConfigModule.forRoot({
       isGlobal: true,
