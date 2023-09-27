@@ -103,7 +103,7 @@ export class AuthService {
       web3auth.init()
 
       const connect = async () => {
-         await web3auth
+        await web3auth
           .connect({
             verifier: 'ppp-custom-devnet',
             verifierId: 'sub',
@@ -114,7 +114,7 @@ export class AuthService {
           })
           .catch(error => {
             console.log(error)
-          })        
+          })
       }
       await connect()
 
@@ -197,7 +197,7 @@ export class AuthService {
         },
         {
           secret: config.secrets.accessToken,
-          expiresIn: '15m'
+          expiresIn: '30m'
         }
       ),
       this.jwtService.signAsync(

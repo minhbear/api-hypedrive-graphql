@@ -8,11 +8,54 @@ type ReturnMessageBase {
 }
 
 type Query {
+  getFilmById(id: ID!): FilmInformationPublic!
   logOut: ReturnMessageBase!
   refreshToken: ReturnTokenDto!
   helloFilmMaker: String!
   getFilmMaker(id: ID!): PersonEntity!
 }
+
+type FilmInformationPublic {
+  id: ID!
+  name: String!
+  description: String!
+  duration: Int!
+  releaseDate: String!
+  genres: [FilmGenre!]!
+  stars: [String!]!
+  directors: [String!]!
+  adminProcess: AdminProcessStatus!
+  status: FilmStatus!
+  topCasts: [FilmTopCast!]!
+  endDateSubscriber: DateTime!
+}
+
+enum FilmGenre {
+  DRAMA
+  ADVENTURE
+  COMEDY
+}
+
+enum AdminProcessStatus {
+  APPROVED
+  REJECTED
+  PENDING
+}
+
+enum FilmStatus {
+  COMING_SOON
+  ON_GOING
+}
+
+type FilmTopCast {
+  name: String!
+  avatar: String!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
 
 type ReturnTokenDto {
   accessToken: String!
@@ -80,17 +123,11 @@ input CreateFilmDto {
   genres: [FilmGenre!]! = []
   stars: [String!]! = []
   directors: [String!]! = []
-  topCasts: [FilmTopCast!]! = []
-  gallery: [String!]! = []
+  topCasts: [FilmTopCastInput!]! = []
+  endDateSubscriber: DateTime!
 }
 
-enum FilmGenre {
-  DRAMA
-  ADVENTURE
-  COMEDY
-}
-
-input FilmTopCast {
+input FilmTopCastInput {
   name: String!
   avatar: String!
 }

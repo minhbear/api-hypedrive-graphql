@@ -5,4 +5,3 @@ registerEnumType(ROLE, { name: 'Role' })
 registerEnumType(FILM_GENRE, { name: 'FilmGenre' })
 registerEnumType(ADMIN_PROCESS_STATUS, { name: 'AdminProcessStatus' })
 registerEnumType(FILM_STATUS, { name: 'FilmStatus' })
-

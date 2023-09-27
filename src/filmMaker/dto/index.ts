@@ -1,6 +1,6 @@
 import { FILM_GENRE } from '@/common/constant'
 import { FilmTopCast } from '@/common/types'
-import { Field, InputType, Int } from '@nestjs/graphql'
+import { Field, GraphQLISODateTime, InputType, Int } from '@nestjs/graphql'
 import { IsNotEmpty } from 'class-validator'
 
 @InputType({ isAbstract: true })
@@ -88,8 +88,7 @@ export class CreateFilmDto {
   @IsNotEmpty()
   topCasts: FilmTopCast[]
 
-  @Field(() => [String], { defaultValue: [] })
+  @Field(() => GraphQLISODateTime)
   @IsNotEmpty()
-  gallery: string[]
+  endDateSubscriber: Date
 }
-
