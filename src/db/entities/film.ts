@@ -5,6 +5,7 @@ import { FilmTopCast } from 'src/common/types'
 import { PersonEntity } from './person'
 import { FilmEventEntity } from './filmEvent'
 import { Exclude, Expose } from 'class-transformer'
+import { FilmCompressedNFTEntity } from './filmCompressedNFT'
 
 @Entity('film')
 @ObjectType({ isAbstract: true })
@@ -82,4 +83,7 @@ export class FilmEntity {
 
   @OneToMany(() => FilmEventEntity, event => event.film)
   events: FilmEventEntity[]
+
+  @OneToMany(() => FilmCompressedNFTEntity, (compressedNFT) => compressedNFT.film)
+  compressedNFTs: FilmCompressedNFTEntity[]
 }

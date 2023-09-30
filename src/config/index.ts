@@ -1,6 +1,5 @@
 import * as dotenv from 'dotenv'
 import { APP_ENV } from 'src/common/constant'
-import { CLUSTER } from '@/common/constant'
 
 dotenv.config()
 
@@ -25,10 +24,19 @@ export const config = {
     accessToken: process.env.JWT_ACCESS_TOKEN,
     refreshToken: process.env.JWT_REFRESH_TOKEN
   },
-  rpcUrl: 'https://devnet.helius-rpc.com/?api-key=dc9c6936-f24b-41fe-a572-187914d3721e',
+  rpcUrl: process.env.RPC_URL,
   admin: {
     // wallet address that admin will sign transaction when film maker action create a collection for their NFT collection
-    publickKey: process.env.ADMIN_PUBLICK_KEY || '89Fh4QKhCEJ5rC1Bf4utchfmqPNejYTfjoW6VxDL8YqB',
+    publicKey: process.env.ADMIN_PUBLIC_KEY,
     secretKey: process.env.ADMIN_SECRET_KEY
   }
+}
+
+export const checkAllValueENVHadPass = (envValues: Record<string, string>[]) => {
+  envValues.forEach(({ name, value }) => {
+    if (!value) {
+      console.error(`${name} had not passed to env file, pls add and run again`)
+      process.exit(0)
+    }
+  })
 }

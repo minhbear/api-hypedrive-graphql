@@ -2,12 +2,12 @@ import { NestFactory, Reflector } from '@nestjs/core'
 import { ClassSerializerInterceptor, Logger, ValidationPipe } from '@nestjs/common'
 import { AppModule } from './app.module'
 import { APILogger } from './config/logger'
-import { config } from './config'
+import { checkAllValueENVHadPass, config } from './config'
 import { isDevelopment } from './utils'
 
 async function bootstrap() {
   try {
-    const { domain, port } = config
+    const { domain, port, admin: { publicKey, secretKey } } = config
 
     const app = await NestFactory.create(AppModule, {
       logger: new APILogger()
@@ -15,6 +15,13 @@ async function bootstrap() {
 
     app.useGlobalPipes(new ValidationPipe({ whitelist: true }))
     app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)))
+
+    // check env
+    checkAllValueENVHadPass([
+      { name: 'admin-secret-key', value: config.admin.secretKey },
+      { name: 'admin-publicKey-key', value: config.admin.publicKey },
+      { name: 'rpc-url', value: config.rpcUrl },
+    ])
 
     await app.listen(port)
 

@@ -98,8 +98,6 @@ export class FilmMakerService {
       adminProcess: ADMIN_PROCESS_STATUS.APPROVED
     } as FilmEntity)
 
-    console.log(film)
-
     return {
       message: `Create film success`,
       success: true

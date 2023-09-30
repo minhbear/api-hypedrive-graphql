@@ -39,7 +39,7 @@ import { JwtModule } from '@nestjs/jwt'
 
         return errorFormatted
       },
-      include: [FilmMakerModule, AuthModule, FilmModule, UserModule]
+      include: [FilmMakerModule, AuthModule, FilmModule, UserModule, NFTModule]
     }),
     ConfigModule.forRoot({
       isGlobal: true,
