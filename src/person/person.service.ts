@@ -22,4 +22,17 @@ export class PersonService {
 
     return person
   }
+
+  async findByPublicKey(publicKey: string, relations?: string[]): Promise<PersonEntity> { 
+    const person = await this.personRepository.findOne({
+      where: { publicKey },
+      relations
+    })
+
+    if (!person) {
+      throw new NotFoundException(Message.Base.NotFound(MessageName.user))
+    }
+
+    return person
+  }
 }

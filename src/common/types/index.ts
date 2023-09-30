@@ -6,6 +6,15 @@ export type JWTPayload = {
   email: string
 }
 
+export type JWTKylanPayload = {
+  domain: string
+  pubkey: string
+  code: string
+  iat: number
+  ttl: number
+  permissions: string[]
+}
+
 @ObjectType({ isAbstract: true })
 @InputType('FilmTopCastInput', { isAbstract: true })
 export class FilmTopCast {
