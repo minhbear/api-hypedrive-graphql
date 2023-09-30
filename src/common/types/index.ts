@@ -54,3 +54,8 @@ export class CollectionData {
 export class CollectionInformation extends CollectionData {
   treeKeypair: PublicKey
 }
+
+export enum ORDER_BY {
+  ASC = 'ASC',
+  DESC = 'DESC'
+}
