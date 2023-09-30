@@ -1,5 +1,5 @@
 import { Field, ID } from '@nestjs/graphql'
-import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm'
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
 import { FilmEntity } from './film'
 
 @Entity('film-compressed-nft')
@@ -20,7 +20,6 @@ export class FilmCompressedNFTEntity {
   @Column()
   uri: string
 
-  @OneToOne(() => FilmEntity)
-  @JoinColumn()
+  @ManyToOne(() => FilmEntity, (film) => film.compressedNFTs)
   film: FilmEntity
 }

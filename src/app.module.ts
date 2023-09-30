@@ -15,6 +15,7 @@ import { join } from 'path'
 import { NFTModule } from './nft/nft.module'
 import { AdminModule } from './admin/admin.module'
 import { FilmModule } from './film/film.module'
+import { UserModule } from './user/user.module'
 import { JwtModule } from '@nestjs/jwt'
 
 @Module({
@@ -38,7 +39,7 @@ import { JwtModule } from '@nestjs/jwt'
 
         return errorFormatted
       },
-      include: [FilmMakerModule, AuthModule, FilmModule]
+      include: [FilmMakerModule, AuthModule, FilmModule, UserModule, NFTModule]
     }),
     ConfigModule.forRoot({
       isGlobal: true,
@@ -51,6 +52,7 @@ import { JwtModule } from '@nestjs/jwt'
     NFTModule,
     AdminModule,
     FilmModule,
+    UserModule,
     JwtModule.register({ global: true }),
     TypeOrmModule.forRoot(configData)
   ],

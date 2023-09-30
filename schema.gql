@@ -86,11 +86,20 @@ enum Role {
 }
 
 type Mutation {
+  mintCompressedNFT(cNFTId: ID!): ReturnMessageBase!
+  createCompressedNFTMetadata(input: CreateCompressedNFTMetadata!): ReturnMessageBase!
   signUp(input: CreateAccountDto!): ReturnAccountDto!
   signIn(input: SignInDto!): ReturnAccountDto!
   signInWithSocial(input: SignInWithSocialDto!): ReturnAccountDto!
   createFilm(input: CreateFilmDto!): ReturnMessageBase!
   createCollection(input: CreateCollectionNFTDto!): ReturnMessageBase!
+}
+
+input CreateCompressedNFTMetadata {
+  filmId: ID!
+  name: String!
+  symbol: String!
+  uri: String!
 }
 
 type ReturnAccountDto {

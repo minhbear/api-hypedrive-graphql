@@ -9,9 +9,21 @@ import { CollectionMetadataDto, CompressedNFTMetadataDto } from '@/filmMaker/dto
 import { CollectionInformation } from '@/common/types'
 import { FilmCollectionNFTEntity } from '@/db/entities/filmCollectionNFT'
 import { MintCompressedNFTCommand } from './commands/mintCompressedNFT.command'
+import { CreateCompressedNFTMetadata } from './dtos'
+import { PersonEntity } from '@/db/entities/person'
+import { InjectRepository } from '@nestjs/typeorm'
+import { FilmCompressedNFTEntity } from '@/db/entities/filmCompressedNFT'
+import { Repository } from 'typeorm'
+import { GetFilmCommand } from '@/film/commands/GetFilm.command'
+import { ReturnMessageBase } from '@/common/interface/returnBase'
 
 @Injectable()
 export class NFTService {
+  constructor(
+    @InjectRepository(FilmCompressedNFTEntity)
+    private readonly filmCompressedNFTRepository: Repository<FilmCompressedNFTEntity>
+  ) {}
+
   async createCollection(params: {
     connection: Connection
     filmMakerPubKey: PublicKey
@@ -137,5 +149,22 @@ export class NFTService {
       compressedNFTMetadata: compressedMetadata,
       receiverAddress
     })
+  }
+
+  async createCompressNFTMetadata(input: CreateCompressedNFTMetadata, person: PersonEntity): Promise<ReturnMessageBase> {
+    const { filmId, name, symbol, uri } = input
+
+    const film = await GetFilmCommand.getByFilmIdAndPersonId(filmId, person.id)
+    await this.filmCompressedNFTRepository.save({
+      film,
+      name,
+      symbol,
+      uri
+    } as FilmCompressedNFTEntity)
+
+    return {
+      success: true,
+      message: 'create film compressed metadata successfully'
+    }
   }
 }
