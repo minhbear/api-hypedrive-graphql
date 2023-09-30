@@ -15,6 +15,7 @@ import { join } from 'path'
 import { NFTModule } from './nft/nft.module'
 import { AdminModule } from './admin/admin.module'
 import { FilmModule } from './film/film.module'
+import { UserModule } from './user/user.module'
 
 @Module({
   imports: [
@@ -37,7 +38,7 @@ import { FilmModule } from './film/film.module'
 
         return errorFormatted
       },
-      include: [FilmMakerModule, AuthModule, FilmModule]
+      include: [FilmMakerModule, AuthModule, FilmModule, UserModule]
     }),
     ConfigModule.forRoot({
       isGlobal: true,
@@ -50,6 +51,7 @@ import { FilmModule } from './film/film.module'
     NFTModule,
     AdminModule,
     FilmModule,
+    UserModule,
     TypeOrmModule.forRoot(configData)
   ],
   providers: [
