@@ -7,7 +7,7 @@ import { Type } from '@nestjs/common'
 /**
  * This function will process query cursor paginate
  *
- * @param query: SelectQueryBuilder of Entity T 
+ * @param query: SelectQueryBuilder of Entity T
  * @param paginationArgs: PaginationArgs
  * @param orderby: ORDER_BY Default is DESC
  * @param cursorColumn: default is id column
@@ -53,7 +53,7 @@ export async function paginate<T>(params: {
   const result = await query.getMany()
   const startCursorId: number = result.length > 0 ? result[0][cursorColumn] : offsetId
   const endCursorId: number = result.length > 0 ? result.slice(-1)[0][cursorColumn] : offsetId
- 
+
   const beforeQuery = totalCountQuery.clone()
   const afterQuery = beforeQuery.clone()
   let countBefore = 0

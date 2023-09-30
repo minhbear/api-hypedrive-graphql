@@ -14,9 +14,7 @@ import { Repository } from 'typeorm'
 
 @Injectable()
 export class UserService {
-  constructor(
-    private readonly nftService: NFTService
-  ) {}
+  constructor(private readonly nftService: NFTService) {}
 
   async mintCompressedNFT(cNFTId: number, person: PersonEntity): Promise<ReturnMessageBase> {
     if (!person.publicKey) {

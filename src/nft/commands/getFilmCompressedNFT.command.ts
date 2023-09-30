@@ -5,7 +5,7 @@ import { getRepository } from 'typeorm'
 
 export class GetFilmCompressedNFTCommand {
   static async getById(id: number, relations: string[]): Promise<FilmCompressedNFTEntity> {
-    const filmCompressedNFT = await getRepository(FilmCompressedNFTEntity).findOne({ 
+    const filmCompressedNFT = await getRepository(FilmCompressedNFTEntity).findOne({
       where: { id },
       relations
     })

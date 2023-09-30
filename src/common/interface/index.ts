@@ -53,7 +53,7 @@ export function Paginated<T>(classRef: Type<T>): any {
   abstract class EdgeType {
     @Field()
     cursor: string
-    
+
     @Field(() => classRef)
     node: T
   }

@@ -7,7 +7,11 @@ import { isDevelopment } from './utils'
 
 async function bootstrap() {
   try {
-    const { domain, port, admin: { publicKey, secretKey } } = config
+    const {
+      domain,
+      port,
+      admin: { publicKey, secretKey }
+    } = config
 
     const app = await NestFactory.create(AppModule, {
       logger: new APILogger()
@@ -20,7 +24,7 @@ async function bootstrap() {
     checkAllValueENVHadPass([
       { name: 'admin-secret-key', value: config.admin.secretKey },
       { name: 'admin-publicKey-key', value: config.admin.publicKey },
-      { name: 'rpc-url', value: config.rpcUrl },
+      { name: 'rpc-url', value: config.rpcUrl }
     ])
 
     await app.listen(port)

@@ -28,7 +28,7 @@ export class FilmMakerResolver {
   async createFilm(@Args('input') input: CreateFilmDto, @Person() person: PersonEntity): Promise<ReturnMessageBase> {
     return await this.filmMakerService.createFilm(input, person)
   }
-  
+
   @AuthKylan([ROLE.FILMMAKER])
   @Mutation(() => ReturnMessageBase)
   async createCollection(@Args('input') input: CreateCollectionNFTDto, @Person() person: PersonEntity) {

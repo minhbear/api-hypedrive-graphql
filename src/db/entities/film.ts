@@ -84,6 +84,6 @@ export class FilmEntity {
   @OneToMany(() => FilmEventEntity, event => event.film)
   events: FilmEventEntity[]
 
-  @OneToMany(() => FilmCompressedNFTEntity, (compressedNFT) => compressedNFT.film)
+  @OneToMany(() => FilmCompressedNFTEntity, compressedNFT => compressedNFT.film)
   compressedNFTs: FilmCompressedNFTEntity[]
 }
