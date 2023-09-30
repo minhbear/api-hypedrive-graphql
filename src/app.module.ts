@@ -15,6 +15,7 @@ import { join } from 'path'
 import { NFTModule } from './nft/nft.module'
 import { AdminModule } from './admin/admin.module'
 import { FilmModule } from './film/film.module'
+import { JwtModule } from '@nestjs/jwt'
 
 @Module({
   imports: [
@@ -50,6 +51,7 @@ import { FilmModule } from './film/film.module'
     NFTModule,
     AdminModule,
     FilmModule,
+    JwtModule.register({ global: true }),
     TypeOrmModule.forRoot(configData)
   ],
   providers: [
