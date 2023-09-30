@@ -8,7 +8,6 @@ import { ReturnMessageBase } from '@/common/interface/returnBase'
 import { CreateCollectionNFTDto, CreateFilmDto } from './dto'
 import { Person } from '@/common/decorators/person.decorator'
 
-@AuthKylan([ROLE.FILMMAKER])
 // @Auth([ROLE.FILMMAKER])
 @Resolver(PersonEntity)
 export class FilmMakerResolver {
@@ -24,11 +23,13 @@ export class FilmMakerResolver {
     return await this.filmMakerService.findOne(id)
   }
 
+  @AuthKylan([ROLE.FILMMAKER])
   @Mutation(() => ReturnMessageBase)
   async createFilm(@Args('input') input: CreateFilmDto, @Person() person: PersonEntity): Promise<ReturnMessageBase> {
     return await this.filmMakerService.createFilm(input, person)
   }
 
+  @AuthKylan([ROLE.FILMMAKER])
   @Mutation(() => ReturnMessageBase)
   async createCollection(@Args('input') input: CreateCollectionNFTDto, @Person() person: PersonEntity) {
     return await this.filmMakerService.createCollection(input, person)

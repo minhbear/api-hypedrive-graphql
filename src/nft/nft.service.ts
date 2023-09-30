@@ -151,7 +151,10 @@ export class NFTService {
     })
   }
 
-  async createCompressNFTMetadata(input: CreateCompressedNFTMetadata, person: PersonEntity): Promise<ReturnMessageBase> {
+  async createCompressNFTMetadata(
+    input: CreateCompressedNFTMetadata,
+    person: PersonEntity
+  ): Promise<ReturnMessageBase> {
     const { filmId, name, symbol, uri } = input
 
     const film = await GetFilmCommand.getByFilmIdAndPersonId(filmId, person.id)

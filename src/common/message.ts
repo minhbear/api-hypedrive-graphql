@@ -20,5 +20,5 @@ export const MessageName = {
   filmMaker: 'FilmMaker',
   film: 'Film',
   cNFT: 'CNFT',
-  collectionNFT: 'CollectionNFT',
+  collectionNFT: 'CollectionNFT'
 }

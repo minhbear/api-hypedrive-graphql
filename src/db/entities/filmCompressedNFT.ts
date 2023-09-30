@@ -20,6 +20,6 @@ export class FilmCompressedNFTEntity {
   @Column()
   uri: string
 
-  @ManyToOne(() => FilmEntity, (film) => film.compressedNFTs)
+  @ManyToOne(() => FilmEntity, film => film.compressedNFTs)
   film: FilmEntity
 }

@@ -13,11 +13,12 @@ export class GetFilmCollectionNFTCommand {
 
     const { masterEditionAccount, mint, metadataAccount, tokenAccount, treeKeypair } = filmCollectionNFT
     if (!masterEditionAccount || !mint || !metadataAccount || !tokenAccount || !treeKeypair) {
-      console.log('information about collection nft not have save to database include (masterEditionAccount, mint, metadataAccount, tokenAccount, treeKeypair)')
+      console.log(
+        'information about collection nft not have save to database include (masterEditionAccount, mint, metadataAccount, tokenAccount, treeKeypair)'
+      )
       throw new BadRequestException(Message.Film.NFT_COLLECTION_NOT_CREATED)
     }
 
     return filmCollectionNFT
   }
-
 }
