@@ -3,12 +3,13 @@ import { FilmMakerService } from './filmMaker.service'
 import { PersonEntity } from 'src/db/entities/person'
 import { ROLE } from 'src/common/constant'
 import { PersonService } from 'src/person/person.service'
-import { Auth } from 'src/common/decorators/auth.decorator'
+import { Auth, AuthKylan } from 'src/common/decorators/auth.decorator'
 import { ReturnMessageBase } from '@/common/interface/returnBase'
 import { CreateCollectionNFTDto, CreateFilmDto } from './dto'
 import { Person } from '@/common/decorators/person.decorator'
 
-@Auth([ROLE.FILMMAKER])
+@AuthKylan([ROLE.FILMMAKER])
+// @Auth([ROLE.FILMMAKER])
 @Resolver(PersonEntity)
 export class FilmMakerResolver {
   constructor(private readonly filmMakerService: FilmMakerService, private readonly personService: PersonService) {}

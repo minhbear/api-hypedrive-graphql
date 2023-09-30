@@ -16,6 +16,7 @@ import { NFTModule } from './nft/nft.module'
 import { AdminModule } from './admin/admin.module'
 import { FilmModule } from './film/film.module'
 import { UserModule } from './user/user.module'
+import { JwtModule } from '@nestjs/jwt'
 
 @Module({
   imports: [
@@ -52,6 +53,7 @@ import { UserModule } from './user/user.module'
     AdminModule,
     FilmModule,
     UserModule,
+    JwtModule.register({ global: true }),
     TypeOrmModule.forRoot(configData)
   ],
   providers: [
