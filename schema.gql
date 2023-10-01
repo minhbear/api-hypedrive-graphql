@@ -114,6 +114,7 @@ enum Role {
 type Mutation {
   createCollection(input: CreateCollectionNFTDto!): ReturnMessageBase!
   createCompressedNFTMetadata(input: CreateCompressedNFTMetadata!): ReturnMessageBase!
+  updateInformation(input: UpdateInformationDto!): ReturnMessageBase!
   mintCompressedNFT(cNFTId: ID!): ReturnMessageBase!
   createFilm(input: CreateFilmDto!): ReturnMessageBase!
   signUp(input: CreateAccountDto!): ReturnAccountDto!
@@ -137,6 +138,14 @@ input CreateCompressedNFTMetadata {
   name: String!
   symbol: String!
   uri: String!
+}
+
+input UpdateInformationDto {
+  publicKey: String
+  avatar: String
+  background: String
+  name: String
+  bio: String
 }
 
 input CreateFilmDto {

@@ -40,7 +40,7 @@ import { FilmCollectionNFTModule } from './film-collection-nft/film-collection-n
 
         return errorFormatted
       },
-      include: [FilmMakerModule, AuthModule, FilmModule, UserModule, NFTModule, FilmCollectionNFTModule]
+      include: [FilmMakerModule, AuthModule, FilmModule, UserModule, NFTModule, FilmCollectionNFTModule, PersonModule]
     }),
     ConfigModule.forRoot({
       isGlobal: true,

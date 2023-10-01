@@ -19,3 +19,18 @@ export class CreateCompressedNFTMetadata {
   @IsNotEmpty()
   uri: string
 }
+
+@InputType({ isAbstract: true })
+export class CompressedNFTMetadata {
+  @Field()
+  @IsNotEmpty()
+  name: string
+
+  @Field()
+  @IsNotEmpty()
+  symbol: string
+
+  @Field()
+  @IsNotEmpty()
+  uri: string
+}

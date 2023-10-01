@@ -5,11 +5,10 @@ import { CreateMetadataAccountArgsV3 } from '@metaplex-foundation/mpl-token-meta
 import { Connection, Keypair, PublicKey } from '@solana/web3.js'
 import { CreateTreeCommand } from './commands/createTree.command'
 import { CreateCollectionCommand } from './commands/createCollection.command'
-import { CompressedNFTMetadataDto } from '@/filmMaker/dto'
 import { CollectionInformation } from '@/common/types'
 import { FilmCollectionNFTEntity } from '@/db/entities/filmCollectionNFT'
 import { MintCompressedNFTCommand } from './commands/mintCompressedNFT.command'
-import { CreateCompressedNFTMetadata } from './dtos'
+import { CompressedNFTMetadata, CreateCompressedNFTMetadata } from './dtos'
 import { PersonEntity } from '@/db/entities/person'
 import { InjectRepository } from '@nestjs/typeorm'
 import { FilmCompressedNFTEntity } from '@/db/entities/filmCompressedNFT'
@@ -96,7 +95,7 @@ export class NFTService {
 
   // Need to validate the mint, tokenAccount, etc ... when mint compressed nft
   async mintCompressedNFT(params: {
-    compressedNFTMetadata: CompressedNFTMetadataDto
+    compressedNFTMetadata: CompressedNFTMetadata
     creatorPubKey: PublicKey
     payer: Keypair
     filmCollectionNFT: FilmCollectionNFTEntity
