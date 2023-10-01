@@ -1,7 +1,7 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql'
 import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm'
-import { FilmEntity } from './film'
 import { Expose } from 'class-transformer'
+import { FilmEntity } from './film'
 
 @Entity('film-collection-nft')
 @ObjectType({ isAbstract: true })
