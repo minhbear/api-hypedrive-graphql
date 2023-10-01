@@ -4,7 +4,6 @@ import { PersonEntity } from 'src/db/entities/person'
 import { ROLE } from 'src/common/constant'
 import { PersonService } from 'src/person/person.service'
 
-
 // @Auth([ROLE.FILMMAKER])
 @Resolver(PersonEntity)
 export class FilmMakerResolver {

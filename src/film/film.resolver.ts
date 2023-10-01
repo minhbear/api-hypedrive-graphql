@@ -1,6 +1,6 @@
 import { Resolver, Query, ID, Args, Mutation } from '@nestjs/graphql'
 import { FilmService } from './film.service'
-import {  CreateFilmDto, FilmInformationPublic, PaginatedFilm } from './dtos'
+import { CreateFilmDto, FilmInformationPublic, PaginatedFilm } from './dtos'
 import { PaginationArgs } from '@/common/interface'
 import { AuthKylan } from 'src/common/decorators/auth.decorator'
 import { ROLE } from '@/common/constant'

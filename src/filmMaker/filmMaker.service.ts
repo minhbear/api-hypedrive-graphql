@@ -7,11 +7,10 @@ import { PersonEntity } from 'src/db/entities/person'
 export class FilmMakerService {
   constructor(
     @InjectRepository(PersonEntity)
-    private personRepository: Repository<PersonEntity>,
+    private personRepository: Repository<PersonEntity>
   ) {}
 
   async findOne(id: number): Promise<PersonEntity> {
     return await this.personRepository.findOneOrFail({ where: { id } })
   }
-  
 }
