@@ -6,12 +6,11 @@ import { PersonEntity } from 'src/db/entities/person'
 import { PersonModule } from 'src/person/person.module'
 import { NFTModule } from '@/nft/nft.module'
 import { FilmCollectionNFTEntity } from '@/db/entities/filmCollectionNFT'
-import { FilmEntity } from '@/db/entities/film'
 import { FilmCompressedNFTEntity } from '@/db/entities/filmCompressedNFT'
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([PersonEntity, FilmCollectionNFTEntity, FilmEntity, FilmCompressedNFTEntity]),
+    TypeOrmModule.forFeature([PersonEntity, FilmCollectionNFTEntity, FilmCompressedNFTEntity]),
     PersonModule,
     NFTModule
   ],

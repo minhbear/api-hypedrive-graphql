@@ -1,23 +1,29 @@
-import { Field, ID } from '@nestjs/graphql'
+import { Field, ID, ObjectType } from '@nestjs/graphql'
 import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm'
 import { FilmEntity } from './film'
+import { Expose } from 'class-transformer'
 
 @Entity('film-collection-nft')
+@ObjectType({ isAbstract: true })
 export class FilmCollectionNFTEntity {
   @Field(() => ID)
   @PrimaryGeneratedColumn()
+  @Expose()
   id: number
 
   @Field()
   @Column()
+  @Expose()
   name: string
 
   @Field()
   @Column()
+  @Expose()
   symbol: string
 
   @Field()
   @Column()
+  @Expose()
   uri: string
 
   @Field({ nullable: true })
