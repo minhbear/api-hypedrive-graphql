@@ -8,7 +8,7 @@ import { CreateCollectionCommand } from './commands/createCollection.command'
 import { CollectionInformation } from '@/common/types'
 import { FilmCollectionNFTEntity } from '@/db/entities/filmCollectionNFT'
 import { MintCompressedNFTCommand } from './commands/mintCompressedNFT.command'
-import { CompressedNFTMetadata, CreateCompressedNFTMetadata } from './dtos'
+import { CompressedNFTMetadata, CreateCompressedNFTMetadata, PaginatedCompressedNFT } from './dtos'
 import { PersonEntity } from '@/db/entities/person'
 import { InjectRepository } from '@nestjs/typeorm'
 import { FilmCompressedNFTEntity } from '@/db/entities/filmCompressedNFT'
@@ -16,6 +16,9 @@ import { Repository } from 'typeorm'
 import { GetFilmCommand } from '@/film/commands/GetFilm.command'
 import { ReturnMessageBase } from '@/common/interface/returnBase'
 import { CollectionMetadataDto } from '@/film-collection-nft/dtos'
+import { PaginationArgs } from '@/common/interface'
+import { paginate } from '@/common/paginate'
+import { GetFilmCompressedNFTCommand } from './commands/getFilmCompressedNFT.command'
 
 @Injectable()
 export class NFTService {
@@ -169,5 +172,17 @@ export class NFTService {
       success: true,
       message: 'create film compressed metadata successfully'
     }
+  }
+
+  async getCompressedNFTsOFFilm(filmId: number, paginationArgs: PaginationArgs): Promise<PaginatedCompressedNFT> {
+    const query = this.filmCompressedNFTRepository.createQueryBuilder()
+    .select()
+    .where('FilmCompressedNFTEntity.filmId = :filmId', { filmId })
+    
+    return paginate<FilmCompressedNFTEntity>({ query, paginationArgs, defaultLimit: 7 })
+  }
+
+  async getCompressedNFT(id: number): Promise<FilmCompressedNFTEntity> {
+    return await GetFilmCompressedNFTCommand.getById(id)
   }
 }

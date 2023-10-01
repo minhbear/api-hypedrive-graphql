@@ -1,4 +1,6 @@
-import { InputType, Field, ID } from '@nestjs/graphql'
+import { InputType, Field, ID, ObjectType } from '@nestjs/graphql'
+import { FilmCompressedNFTEntity } from '@/db/entities/filmCompressedNFT'
+import { Paginated } from '@/common/interface'
 import { IsNotEmpty } from 'class-validator'
 
 @InputType({ isAbstract: true })
@@ -34,3 +36,6 @@ export class CompressedNFTMetadata {
   @IsNotEmpty()
   uri: string
 }
+
+@ObjectType({ isAbstract: true })
+export class PaginatedCompressedNFT extends Paginated(FilmCompressedNFTEntity) {}

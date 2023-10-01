@@ -9,6 +9,8 @@ type ReturnMessageBase {
 
 type Query {
   getFilmCollectionNFTById(id: ID!): PublicInformationFilmCollectionNFT!
+  getCompressedNFTsOfFilm(filmId: ID!, first: Int, after: String, last: Int, before: String): PaginatedCompressedNFT!
+  getCompressedNFT(id: ID!): FilmCompressedNFTEntity!
   getFilmById(id: ID!): FilmInformationPublic!
   getFilms(first: Int, after: String, last: Int, before: String): PaginatedFilm!
   logOut: ReturnMessageBase!
@@ -22,6 +24,31 @@ type PublicInformationFilmCollectionNFT {
   name: String!
   symbol: String!
   uri: String!
+}
+
+type PaginatedCompressedNFT {
+  edges: [FilmCompressedNFTEntityEdge!]
+  pageInfo: PageInfo
+}
+
+type FilmCompressedNFTEntityEdge {
+  cursor: String!
+  node: FilmCompressedNFTEntity!
+}
+
+type FilmCompressedNFTEntity {
+  id: ID!
+  name: String!
+  symbol: String!
+  uri: String!
+  filmId: Float!
+}
+
+type PageInfo {
+  startCursor: String
+  endCursor: String
+  hasPreviousPage: Boolean!
+  hasNextPage: Boolean!
 }
 
 type FilmInformationPublic {
@@ -74,13 +101,6 @@ type PaginatedFilm {
 type FilmInformationPublicEdge {
   cursor: String!
   node: FilmInformationPublic!
-}
-
-type PageInfo {
-  startCursor: String
-  endCursor: String
-  hasPreviousPage: Boolean!
-  hasNextPage: Boolean!
 }
 
 type ReturnTokenDto {
