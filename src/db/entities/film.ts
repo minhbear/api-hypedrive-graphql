@@ -4,7 +4,7 @@ import { FILM_GENRE, ADMIN_PROCESS_STATUS, FILM_STATUS } from 'src/common/consta
 import { FilmTopCast } from 'src/common/types'
 import { PersonEntity } from './person'
 import { FilmEventEntity } from './filmEvent'
-import { Exclude, Expose } from 'class-transformer'
+import { Expose } from 'class-transformer'
 import { FilmCompressedNFTEntity } from './filmCompressedNFT'
 
 @Entity('film')
@@ -60,7 +60,7 @@ export class FilmEntity {
   @Expose()
   status: FILM_STATUS
 
-  @Field(() => [FilmTopCast])
+  @Field(() => [FilmTopCast], { nullable: true })
   @Column({ type: 'jsonb' })
   @Expose()
   topCasts: FilmTopCast[]

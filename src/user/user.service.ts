@@ -8,9 +8,7 @@ import { GetFilmCompressedNFTCommand } from '@/nft/commands/getFilmCompressedNFT
 import { NFTService } from '@/nft/nft.service'
 import { convertStringToUnitArray } from '@/utils'
 import { BadRequestException, Injectable, InternalServerErrorException } from '@nestjs/common'
-import { InjectRepository } from '@nestjs/typeorm'
 import { Keypair, PublicKey, Connection } from '@solana/web3.js'
-import { Repository } from 'typeorm'
 
 @Injectable()
 export class UserService {

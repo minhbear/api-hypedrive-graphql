@@ -5,7 +5,7 @@ import { CreateMetadataAccountArgsV3 } from '@metaplex-foundation/mpl-token-meta
 import { Connection, Keypair, PublicKey } from '@solana/web3.js'
 import { CreateTreeCommand } from './commands/createTree.command'
 import { CreateCollectionCommand } from './commands/createCollection.command'
-import { CollectionMetadataDto, CompressedNFTMetadataDto } from '@/filmMaker/dto'
+import { CompressedNFTMetadataDto } from '@/filmMaker/dto'
 import { CollectionInformation } from '@/common/types'
 import { FilmCollectionNFTEntity } from '@/db/entities/filmCollectionNFT'
 import { MintCompressedNFTCommand } from './commands/mintCompressedNFT.command'
@@ -16,6 +16,7 @@ import { FilmCompressedNFTEntity } from '@/db/entities/filmCompressedNFT'
 import { Repository } from 'typeorm'
 import { GetFilmCommand } from '@/film/commands/GetFilm.command'
 import { ReturnMessageBase } from '@/common/interface/returnBase'
+import { CollectionMetadataDto } from '@/film-collection-nft/dtos'
 
 @Injectable()
 export class NFTService {
