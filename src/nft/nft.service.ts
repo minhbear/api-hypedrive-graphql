@@ -175,10 +175,11 @@ export class NFTService {
   }
 
   async getCompressedNFTsOFFilm(filmId: number, paginationArgs: PaginationArgs): Promise<PaginatedCompressedNFT> {
-    const query = this.filmCompressedNFTRepository.createQueryBuilder()
-    .select()
-    .where('FilmCompressedNFTEntity.filmId = :filmId', { filmId })
-    
+    const query = this.filmCompressedNFTRepository
+      .createQueryBuilder()
+      .select()
+      .where('FilmCompressedNFTEntity.filmId = :filmId', { filmId })
+
     return paginate<FilmCompressedNFTEntity>({ query, paginationArgs, defaultLimit: 7 })
   }
 

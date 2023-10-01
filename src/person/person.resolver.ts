@@ -13,7 +13,10 @@ export class PersonResolver {
 
   @Mutation(() => ReturnMessageBase)
   @AuthKylan([ROLE.FILMMAKER, ROLE.USER])
-  async updateInformation(@Args('input') input: UpdateInformationDto, @Person() person: PersonEntity): Promise<ReturnMessageBase> {
+  async updateInformation(
+    @Args('input') input: UpdateInformationDto,
+    @Person() person: PersonEntity
+  ): Promise<ReturnMessageBase> {
     return await this.personService.updateInformation(input, person)
   }
 }
